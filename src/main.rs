@@ -1,21 +1,14 @@
 use boa_engine::{Context, Source};
-use std::path::Path;
-use std::fs;
 
 fn main() {
     // 实例化执行上下文
     let mut context = Context::default();
 
-    // 获取当前文件的路径
-    let current_dir = std::env::current_dir().unwrap();
-    let js_file_path = current_dir.join("pac_utils.js");
-    let pac_file_path = current_dir.join("proxy.pac");
-
     // 读取JavaScript文件内容
-    let js_content = fs::read_to_string(js_file_path).expect("Unable to read JS file");
+    let js_content = include_str!("pac_utils.js");
 
     // 读取PAC文件内容
-    let pac_content = fs::read_to_string(pac_file_path).expect("Unable to read PAC file");
+    let pac_content = include_str!("proxy.pac");
     // 加载PAC文件内容
     let _ = context.eval(Source::from_bytes(&js_content));
 
